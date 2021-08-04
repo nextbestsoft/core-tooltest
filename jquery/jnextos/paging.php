@@ -10,6 +10,11 @@
     <script src="jquery-3.6.0.min.js"></script>
 
     <script src="jpaging.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#paging').intitPagination(1, 100);
+        });
+    </script>
     <link rel="stylesheet" href="jpaging.css" >
     <title>Demo paging use jquery</title>
   </head>
@@ -17,10 +22,14 @@
   <body>
     <h1>Demo paging 1</h1>
     <div class="container text-center">
-      <div class="paging" id="paging">
-      </div>
-      <div id="hidden-paging">
-      </div>
+      <ul class="paging" id="paging">
+        <li id="first-page" class="page-link"></li>
+        <li id="prev-page" class="page-link"></li>
+        <li id="page-link-list" class="page-link"></li>
+        <li id="next-page" class="page-link"></li>
+        <li id="last-page" class="page-link"></li>
+      </ul>
+      <div id="hidden-paging"></div>
     </div>
 
     <!-- Optional JavaScript -->

@@ -1,3 +1,10 @@
 .cur-page {
     color: red;
 }
+ul.paging {
+  list-style-type: none !important;
+}
+
+li.page-link {
+  display: inline !important;
+}

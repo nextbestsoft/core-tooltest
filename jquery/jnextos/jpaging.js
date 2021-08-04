@@ -1,6 +1,4 @@
-//$(document).ready(function() {
-
-alert("aaa");
+$(document).ready(function() {
 
     // 	number of items displayed on each page
     var itemsOnPage = 10;
@@ -17,16 +15,7 @@ alert("aaa");
     // text to be display on the last button
     var lastText = "Last";
 
-    var initFlag = false;
-//alert($("#initpaging").val());
-    if(typeof($("#initpaging").val()) !== "undefined") {
-        if ($("#initpaging").val() === "1") {
-            initFlag = true;
-        }
-    }
-//alert("initFlag=" + initFlag);
-
-    $.fn.updatePagination = function (currentPage) {
+    $.fn.updatePagination = function (currentPage, mode) {
 
          var startPage = 1;
          var endPage = itemsOnPage;
@@ -38,23 +27,14 @@ alert("aaa");
          if ($("#endpage").val() !== "undefined") {
              endPage = $("#endpage").val();
          }
-
-         var floorNum = Math.floor(itemsOnPage / 2);
-         
-//alert("startPage=" + startPage + ": endPage = " + endPage);
-         if (currentPage > floorNum) {
-//alert("DEBUG1")
-              startPage = currentPage - startPage;
-              endPage = startPage + itemsOnPage;
-         } else {
-//alert("DEBUG2")
-              startPage = parseInt(currentPage) + 1;
-              endPage = parseInt(currentPage) + 1 + itemsOnPage;
+ 
+         if (mode == 3) {
+             startPage++;
+             endPage++;
          }
-//alert("startPage=" + startPage + ": endPage = " + endPage);
-
-         $("#paging").empty();
-         $("#paging").drawPages();
+          
+         $("#page-link-list").empty();
+         $("#page-link-list").updatePageList(startPage, endPage);
          $("#startpage").remove();
          $("#endpage").remove();
          $("<input>", {
@@ -71,23 +51,81 @@ alert("aaa");
          }).appendTo('#hidden-paging')
     }
 
+    $("#first-page").click(function() {
+        currentPage = 1
+        $('body').updatePagination(currentPage, 3);
+    });
+
+    $("#pre-page").click(function() {
+        currentPage = $(this).attr("id");
+        $('body').updatePagination(currentPage, 3);
+    });
+
+    $("#next-page").click(function() {
+        $('body').updatePagination(currentPage, 3);
+    });
+
+    $("#last-page").click(function() {
+        currentPage = $(this).attr("id");
+        $('body').updatePagination(currentPage, 4);
+    });
+
+    // declare function intitPagination()
+    $.fn.intitPagination = function (currentPageInit, totalPagesInit) {
+         console.log("intitPagination() start");
+
+         currentPage = currentPageInit;
+         startPage = currentPage;
+         totalPages = totalPagesInit;
+
+         if (totalPages < (itemsOnPage + currentPage)) {
+             endPage = totalPages;
+         } else {
+             endPage = itemsOnPage + currentPage;
+         }
+ 
+         $('body').drawPages();
+         $('body').setHidden(startPage, endPage);
+
+         console.log("intitPagination() finsh");
+    };
+
+    // declare function
+    $.fn.updatePageList = function (startPage, endPage) {
+         for (var idx = startPage; idx < endPage; idx++) {
+
+             if (currentPage == idx) {
+                 className = "nav-page cur-page";
+             } else {
+                 className = "nav-page";
+             }
+
+             $("<a />", {
+                 id : idx,
+                 name : "link",
+                 class: className,
+                 href : "#",
+                 text : idx + " "
+             }).appendTo('#page-link-list');
+             console.log(idx);
+         }
+    };
+    
+
+    // declare function
     $.fn.drawPages = function () {
 
          $("<a />", {
-             id : 1,
              name : "first_page",
-             class: "nav-page first-page",
-             href : "",
+             href : "#",
              text : firstText + " "
-         }).appendTo('#paging');
+         }).appendTo('#first-page');
 
          $("<a />", {
-             id : idx - 1,
-             class: "nav-page pre-page",
-             name : "pre_spage",
-             href : "",
+             name : "prev_page",
+             href : "#",
              text : prevText + " "
-         }).appendTo('#paging');
+         }).appendTo('#prev-page');
 
          for (var idx = startPage; idx < endPage; idx++) {
 
@@ -103,46 +141,27 @@ alert("aaa");
                  class: className,
                  href : "#",
                  text : idx + " "
-             }).appendTo('#paging');
+             }).appendTo('#page-link-list');
              console.log(idx);
          }
 
          $("<a />", {
-             id : "next-page",
              name : "next_page",
-             class: "nav-page next-page",
-             href : "#next",
+             href : "#",
              text : nextText + " "
-         }).appendTo('#paging');
+         }).appendTo('#next-page');
 
          $("<a />", {
-             id : "last-page",
              name : "last_page",
-             class: "nav-page last-page",
-             href : "#last",
+             href : "#",
              text : lastText + " "
-         }).appendTo('#paging');
+         }).appendTo('#last-page');
 
     };
 
-    $.fn.intitPagination = function (currentPageInit, totalPagesInit) {
-         var className;
-         initPaging = true;
-         currentPage = currentPageInit;
-         startPage = currentPage;
-         totalPages = totalPagesInit;
+    // declare function setHidden()
+    $.fn.setHidden = function (startpage, endPage) {
 
-         if (totalPages < (itemsOnPage + currentPage)) {
-             endPage = totalPages;
-         } else {
-             endPage = itemsOnPage + currentPage;
-         }
- 
-         $('#paging').drawPages();
-         $('#paging').setHidden(1, startPage, endPage);
-    };
-
-    $.fn.setHidden = function (initFlag, startpage, endPage) {
          $('#hidden-paging').empty();
          $("<input>", {
              id: "initpaging",
@@ -164,26 +183,5 @@ alert("aaa");
          }).appendTo('#hidden-paging');
     }
 
-    if (initFlag == false) {
-        // init Pagination
-        $('#paging').intitPagination(1, 100);
-    }
-
-    $("#next-page").click(function() {
-alert("clicked page");
-        currentPage = $(this).attr("id");
-        //alert(currentPage);
-        $('#paging').updatePagination(currentPage);
-    });
-
-    $("#last-page").click(function() {
-alert("clicked last-page");
-        currentPage = $(this).attr("id");
-        //alert(currentPage);
-        $('#paging').updatePagination(currentPage);
-    });
-
-
-//});
-
+});
 
