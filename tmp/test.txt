@@ -1,0 +1,5 @@
+snmpsimd --agent-udpv4-endpoint=193.193.193.10:1025
+
+
+
+snmpsim: /usr/share/doc/snmpsim/examples/data/1.3.6.1.6.1.1.0/127.0.0.1.snmprec

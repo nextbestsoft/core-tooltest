@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk 
+
+export PYTHONPATH=:$(DEB_DESTDIR)usr/lib/python2.7/dist-packages/
+
+install/python27-requests::
+	mkdir -p $(DEB_DESTDIR)usr/lib/python2.7/dist-packages/
+	tar  --strip-components=1 -xvzf requests-2.26.0.tar.gz
+	python2 setup.py install --install-lib=$(DEB_DESTDIR)usr/lib/python2.7/dist-packages/ --install-scripts=$(DEB_DESTDIR)usr/lib/python2.7/dist-packages/

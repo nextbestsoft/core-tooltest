@@ -1,0 +1,9 @@
+Source: python27-requests
+Maintainer: example <sample@example.com>
+Build-Depends: cdbs, debhelper, python2.7, python-setuptools
+Standards-Version: 2.26.0
+
+Package: python27-requests
+Architecture: all
+Depends: python2.7
+Description: python27-requests
