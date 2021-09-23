@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+<script src="jquery-3.6.0.min.js"></script>
+<script src="demo1.js"></script>
+
+</head>
+<body>
+
+<h2>HTML Table</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>col1</th>
+    <th>col2</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody id="tbody">
+  <tr>
+    <td>Island Trading</td>
+    <td>Helen Bennett</td>
+    <td>
+      <input type="button" value="edit">
+      <input type="button" value="delete">	    
+    </td>
+  </tr>
+  <tr>
+    <td class="class1">test value 1</td>
+    <td class="class2">test value 2</td>
+    <td>
+      <input class="edit" type="button" value="edit">
+      <input class="delete" type="button" value="delete">	    
+    </td>
+  </tr>
+  <tr>
+    <td><input type="text" value="test1"></td>
+    <td><input type="text" value="test2"></td>
+    <td>
+      <input type="button" value="finish-edit">
+      <input type="button" value="stop-edit">
+    </td>
+  </tr>
+  </tbody>
+</table>
+<input id="add-row" type="button" name="add-row" value="add-row">
+<input class="stop-adding" type="button" name="finish-add" value="stop-add">
+<input id="addBtn"" type="button" name="finish-add" value="addBtn">
+
+</body>
+</html>
+
+
