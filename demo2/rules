@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk 
+
+export MY_DEB_DESTDIR=$(DEB_DESTDIR)
+
+install/wwwcount::
+	mkdir -p $(DEB_DESTDIR)usr/local/etc
+	#tar  --strip-components=2 -xvzf wwwcount2.5.tar.gz
+	$(MAKE) all
+	$(MAKE) install prefix=$(DEB_DESTDIR)usr/local/etc
