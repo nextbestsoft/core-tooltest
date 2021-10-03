@@ -1,0 +1,25 @@
+●chroot環境
+
+mkfs -t ext4 /dev/sdb
+
+umount /home/www/users
+mount -o usrquota,grpquota /dev/sdb /home/www/users
+quotacheck -um /home/www/users
+quotaon -uv /home/www/users
+edquota -u www.vuser01
+repquota -au
+
+fallocate -l 100M test100M.dat
+fallocate -l 1M test1M.dat
+
+https://www.server-world.info/query?os=Ubuntu_18.04&p=quota
+https://www.howtoforge.com/chrooted_ssh_howto_debian_p2
+https://tech.godpress.net/?p=361
+
+
+useradd -s /bin/bash -m -d /home/chroot2/home/dung3 -c "dung3" dung3
+
+http://usaturn.net/memo/shell_tech_yesorno.html
+ 
+
+
