@@ -1,0 +1,28 @@
+#!/bin/sh
+
+user=vuser1
+password="passwd"
+password2="passwd"
+
+expect -c "
+spawn passwd ${user}
+expect \"New password:\"
+send $password; send \r
+expect \"Retype new password:\"
+send $password2; send \r
+expect eof exit 0
+"
+echo
+echo $?
+
+CMD="ftpasswd --passwd --name=${user} --file=/etc/ftp-passwd --uid=1009 --gid=33 --home=/home/${user} --shell=/bin/nologin"
+expect -c "
+spawn ${CMD}
+expect \"Password:\"
+send $password; send \r
+expect \"Re-type password:\"
+send $password2; send \r
+expect eof exit 0
+"
+echo
+echo $?
